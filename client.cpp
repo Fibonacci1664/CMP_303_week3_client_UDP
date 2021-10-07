@@ -84,6 +84,7 @@ int main()
 		int randNum = rand() % 100 + 1;
 		bool packetDropped = true;
 
+		// Simulate packets being dropped
 		if (randNum < 60)
 		{
 			// Send the message to the server.
@@ -101,6 +102,8 @@ int main()
 		sockaddr_in fromAddr;
 		int fromAddrSize = sizeof(fromAddr);
 
+		// Control whether we receive echo from server based on whether the packet was even sent
+		// Otherwise we end up blocked at recvfrom()
 		if (!packetDropped)
 		{
 			int count = recvfrom(UDPclientSocket, buffer, MESSAGESIZE, 0,
